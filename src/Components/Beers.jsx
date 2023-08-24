@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 
 const Beers = () => {
-    const [beers, setBeers] = useState([]);
+    const [beers, setBeers] = useState();
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
 
