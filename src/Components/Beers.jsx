@@ -1,39 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 
 const Beers = () => {
-    const [beers, setBeers] = useState();
-    const [page, setPage] = useState(1);
-    const [loading, setLoading] = useState(false);
+  const [beers, setBeers] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
-    const fetchBeers = async () => {
-        setLoading(true);
-        const response = await fetch(
-            `https://api.punkapi.com/v2/beers?page=${page}&per_page=9`
-        );
-        const data = await response.json();
-        setBeers((prevBeers) => [...prevBeers, ...data]);
-        setLoading(false);
+  const fetchBeers = async () => {
+    setLoading(true);
+    const response = await fetch(
+      `https://api.punkapi.com/v2/beers?page=${page}&per_page=9`
+    );
+    const data = await response.json();
+    setBeers((prevBeers) => [...prevBeers, ...data]);
+    setLoading(false);
+  };
+
+  const handleScroll = () => {
+    if (
+      window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 &&
+      !loading
+    ) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  useEffect(() => {
+    fetchBeers();
+  }, [page]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
     };
-
-    useEffect(() => {
-        fetchBeers();
-    }, [page]);
-
-    const handleScroll = () => {
-        if (
-            window.innerHeight + window.scrollY >= document.body.offsetHeight - 100
-        ) {
-            setPage((prevPage) => prevPage + 1);
-        }
-    };
-
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
+  }, []);
     return (
         <div>
             <Navbar></Navbar>
