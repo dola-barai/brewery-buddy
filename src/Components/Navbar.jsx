@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 import logo from './../../public/logo-nav.png'
-import { useAuth } from './AuthContext';
+import { AuthContext } from './AuthContext';
+import { useContext } from 'react';
 
 const Navbar = () => {
-    const { user, logout } = useAuth();
+    const { user, logout } = useContext(AuthContext)
     return (
         <div className=''>
             <div className="navbar bg-black fixed bg-opacity-40">

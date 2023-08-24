@@ -17,5 +17,5 @@ module.exports = {
       { allowConstantExport: true },
     ],
   },
-  "prop-types": "off"
+  
 }
